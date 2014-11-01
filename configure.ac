@@ -20,6 +20,13 @@ PKG_CHECK_MODULES([GOBJECT], [gobject-2.0 >= 2.38.0])
 PKG_CHECK_MODULES([GIO], [gio-2.0 >= 2.38.0])
 PKG_CHECK_MODULES([GTK3], [gtk+-3.0 >= 3.10.0])
 
+AC_ARG_ENABLE(demos, AS_HELP_STRING([--enable-demos], [enable demos @<:@default=no@:>@]),
+	      [], [enable_demos=no])
+AS_IF([test "x$enable_demos" = "xyes"],
+	[AC_DEFINE([DEMOS], [1], [Building demos])],
+	[])
+AM_CONDITIONAL([BUILD_DEMOS], [test x$enable_demos = x"yes"])
+
 AC_CONFIG_MACRO_DIR([m4])
 
 
@@ -41,5 +48,7 @@ AC_MSG_RESULT([
         compiler:               ${CC}
         cflags:                 ${CFLAGS}
         ldflags:                ${LDFLAGS}
+
+        demos:                  ${enable_demos}
 
 ])
